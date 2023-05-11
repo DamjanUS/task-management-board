@@ -1,57 +1,62 @@
 <template>
-<div class="tasks">
-  <div class="fontSizeT">{{ task.title }}</div>
-  <div>{{ task.description }}</div>
-  <div>Due Date:{{ formatDate }}</div>
-  <div v-if="dueTime < 0">Task overdue {{dueTime*(-1)}} days</div>
-  <div v-else >Due in {{ dueTime }} days</div>
-  <CheckBox label="Completed" :value="task.completed" @input="task.completed = $event"></CheckBox> 
-</div> 
+  <div class="tasks" :class="{ 'completed': task.completed }">
+    <div class="fontSizeT">{{ task.title }}</div>
+    <div>{{ task.description }}</div>
+    <div>Due Date:{{ formatDate }}</div>
+    <div v-if="dueTime < 0">Task overdue {{ dueTime * -1 }} days</div>
+    <div v-else>Due in {{ dueTime }} days</div>
+    <CheckBox
+      label="Completed"
+      :value="task.completed"
+      @input="completedTask($event)"
+    ></CheckBox>
+  </div>
 </template>
 
 <script>
-import CheckBox from '@/components/CheckBox.vue'
-import { format } from 'date-fns'
-import { differenceInDays } from 'date-fns'
+import CheckBox from "@/components/CheckBox.vue";
+import { format } from "date-fns";
+import { differenceInDays } from "date-fns";
 
 export default {
   data() {
-    return{
-    currentDate: new Date(), 
-    isDivVisible: true
-    }
+    return {
+      currentDate: new Date(),
+    };
   },
-    props:{
-      task: Object  
+  props: {
+    task: Object,
+  },
+  methods: {
+    completedTask(input) {
+      this.$emit("completed", input);
     },
-     methods:{
-    
   },
-  computed:{
-formatDate(){
-       const formatD = format(this.task.dueDate,'dd MMM yyyy HH:mm')
-       return formatD
+  computed: {
+    formatDate() {
+      const formatD = format(this.task.dueDate, "dd MMM yyyy HH:mm");
+      return formatD;
     },
-dueTime(){  
-     const result = differenceInDays(
-      this.task.dueDate,this.currentDate
-     )
-     return result   
-},
-
+    dueTime() {
+      const result = differenceInDays(this.task.dueDate, this.currentDate);
+      return result;
+    },
   },
-    components:{
-      CheckBox  
-    }
-}
+  components: {
+    CheckBox,
+  },
+};
 </script>
 
 <style lang="postcss" scoped>
-.tasks{
-    @apply border border-stone-300 rounded-xl p-3 m-2 w-56 bg-blue-300; 
+.tasks {
+  @apply border border-stone-300 rounded-xl p-3 m-2 w-56 bg-blue-300;
 }
-.fontSizeT{
-  @apply text-xl
+.tasks.completed {
+  @apply border border-stone-300 rounded-xl p-3 m-2 w-56 bg-red-300;
+}
+.fontSizeT {
+  @apply text-xl;
 }
 </style>
 
