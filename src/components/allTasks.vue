@@ -50,7 +50,7 @@ export default {
 
 <style lang="postcss" scoped>
 .tasks {
-  @apply border border-stone-300 rounded-xl p-3 m-2 w-56 bg-blue-300;
+  @apply border border-stone-300 rounded-xl p-3 m-2 w-56 bg-blue-600;
 }
 .tasks.completed {
   @apply border border-stone-300 rounded-xl p-3 m-2 w-56 bg-red-300;

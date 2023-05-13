@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <allTasks
+    <draggable v-model="tasks">
+      <!-- <allTasks
       v-for="task in sortTask"
       :key="task.id"
       :task="task"
@@ -9,12 +10,22 @@
           task.completed = event;
         }
       "
-    ></allTasks>
+    ></allTasks> -->
+      <taskCategory
+        v-for="category in taskCategories"
+        :key="category.id"
+        :category="category"
+      >
+      </taskCategory>
+      <!-- <all-tasks v-for="task in tasks" :key="task.id" > </all-tasks>   -->
+    </draggable>
   </div>
 </template>
 
 <script>
-import AllTasks from "./allTasks.vue";
+// import AllTasks from "./allTasks.vue";
+import draggable from "vuedraggable";
+import taskCategory from "./taskCategory.vue";
 import _ from "lodash";
 
 //import PButton from '@/components/PButton.vue'
@@ -61,6 +72,47 @@ export default {
           dueDate: new Date(2024, 11, 29, 9, 45),
         },
       ],
+      taskCategories: [
+        {
+          id: 1,
+          name: "categoryOne",
+          tasks: [
+            {
+              id: 1,
+              title: "January",
+              description: "workmonth1",
+              completed: false,
+              dueDate: new Date(2024, 12, 21, 7, 15),
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "categoryTwo",
+          tasks: [
+            {
+              id: 2,
+              title: "February",
+              description: "workmonth2",
+              completed: false,
+              dueDate: new Date(2024, 9, 17, 11, 25),
+            },
+          ],
+        },
+        {
+          id: 3,
+          name: "categoryThree",
+          tasks: [
+            {
+              id: 3,
+              title: "April",
+              description: "workmonth3",
+              completed: false,
+              dueDate: new Date(2025, 8, 19, 19, 55),
+            },
+          ],
+        },
+      ],
     };
   },
   name: "HelloWorld",
@@ -78,7 +130,9 @@ export default {
     },
   },
   components: {
-    AllTasks,
+    // AllTasks,
+    draggable,
+    taskCategory,
     /*  PButton,
     Checkbox */
   },
